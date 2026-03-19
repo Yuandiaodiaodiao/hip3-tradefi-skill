@@ -17,7 +17,7 @@ description: HIP-3 TradeFi Asset Index - Query and discover all RWA/TradeFi perp
 {"type": "perpDexs"}
 ```
 
-返回所有已部署的 perp DEX 列表（xyz, flx, vntl, km, cash, hyna 等）。
+返回所有已部署的 perp DEX 列表（xyz, flx, vntl, km, cash, hyna, abcd 等）。
 
 ### 2. 获取某个 DEX 的资产列表和行情
 
@@ -119,12 +119,13 @@ curl -s -X POST https://api.hyperliquid.xyz/info \
 
 | DEX | 全名 | 定位 | 资产数 |
 |-----|------|------|--------|
-| xyz | XYZ (trade.xyz) | 最大，股票+商品+指数 | ~50 |
-| flx | Felix Exchange | 商品+部分股票/加密 | ~12 |
+| xyz | XYZ (trade.xyz) | 最大，股票+商品+指数+外汇 | ~53 |
+| flx | Felix Exchange | 商品+股票/加密+指数 | ~16 |
 | vntl | Ventuals | 板块 ETF、Pre-IPO (SpaceX/OpenAI/Anthropic) | ~13 |
-| km | Kinetiq Markets | 股票+商品+指数+债券 | ~17 |
-| cash | dreamcash | 精选股票+商品 | ~12 |
-| hyna | HyENA | 加密货币永续合约 | ~21 |
+| km | Markets by Kinetiq | 股票+商品+指数+债券+外汇 | ~23 |
+| cash | dreamcash | 精选股票+商品+加密 | ~15 |
+| hyna | HyENA | 加密货币永续合约+商品 | ~23 |
+| abcd | ABCDEx | 指数 | ~1 |
 
 ## 全部资产索引（含官方描述）
 
@@ -144,6 +145,7 @@ curl -s -X POST https://api.hyperliquid.xyz/info \
 | xyz:CRWV | CoreWeave | 追踪 CoreWeave 1 股普通股价值。CoreWeave 提供为 AI 和高性能计算优化的 GPU 云基础设施。 |
 | xyz:GME | 游戏驿站 | 追踪 GameStop 1 股普通股价值。GameStop 是专注于视频游戏、消费电子和收藏品的零售商。 |
 | xyz:GOOGL | 谷歌 | 追踪 Alphabet Inc. A 类普通股 1 股价值。Alphabet 是 Google 母公司，运营搜索、广告、云计算和 AI 业务。 |
+| xyz:HIMS | Hims & Hers | 追踪 Hims & Hers Health 1 股普通股价值。Hims & Hers 是远程医疗和健康平台，提供在线处方药和健康产品。 |
 | xyz:HOOD | Robinhood | 追踪 Robinhood Markets 1 股普通股价值。Robinhood 运营零售经纪平台，提供零佣金股票、期权和加密货币交易。 |
 | xyz:HYUNDAI | 现代 | 追踪现代汽车 1 股普通股价值。Oracle 将韩元价格按 USD/KRW 汇率转换为美元。现代是全球汽车制造商，现代汽车集团持有 Boston Dynamics 80% 股权。 |
 | xyz:INTC | 英特尔 | 追踪 Intel 1 股普通股价值。Intel 设计和制造半导体和计算平台，生产 CPU 和相关硬件。 |
@@ -182,6 +184,7 @@ curl -s -X POST https://api.hyperliquid.xyz/info \
 | xyz:NATGAS | 天然气 | 追踪 1 MMBtu Henry Hub 天然气价值。Henry Hub 是美国天然气定价的主要基准。 |
 | xyz:PALLADIUM | 钯金 | 追踪 1 金衡盎司钯金价值。钯金主要用于汽车催化转化器，是排放控制系统的关键投入。 |
 | xyz:PLATINUM | 铂金 | 追踪 1 金衡盎司铂金价值。铂金主要需求来自汽车催化剂、珠宝和工业应用。 |
+| xyz:URANIUM | 铀 | 追踪铀价格。铀是核能发电的核心燃料，随着全球清洁能源需求增长而受到关注。 |
 
 ### xyz — 指数 & 外汇
 
@@ -190,6 +193,8 @@ curl -s -X POST https://api.hyperliquid.xyz/info \
 | xyz:XYZ100 | XYZ100指数 | 追踪 100 家最大、最活跃交易的非金融公司的修正市值加权指数，作为美国大盘科技和成长股基准。 |
 | xyz:JP225 | 日经225 | 基于日元的价格加权指数，追踪 225 家日本领先企业，日本股市的主要基准。Oracle 不做汇率转换。 |
 | xyz:KR200 | 韩国200 | 基于韩元的市值加权指数，追踪 200 家韩国大盘股，韩国股市的主要基准。Oracle 不做汇率转换。 |
+| xyz:SP500 | 标普500 | 标普500 市值加权指数，追踪美国 500 家最大上市公司，被广泛视为衡量美国大盘股的最佳单一指标。 |
+| xyz:VIX | 恐慌指数 | 追踪 CBOE 波动率指数 (VIX)，衡量标普500 期权隐含的 30 天预期波动率，常被称为市场"恐慌指标"。 |
 | xyz:DXY | 美元指数 | 追踪美元兑六种主要外币（欧元、日元、英镑、加元、瑞典克朗、瑞郎）的篮子指数。 |
 | xyz:EUR | 欧元 | 追踪 EUR/USD 汇率。欧元是欧元区官方货币，全球外汇市场最活跃交易货币之一。 |
 | xyz:JPY | 日元 | 追踪 USD/JPY 汇率。日元是日本官方货币，全球外汇市场最活跃交易货币之一。 |
@@ -198,9 +203,11 @@ curl -s -X POST https://api.hyperliquid.xyz/info \
 
 | 代码 | 中文 | 描述 |
 |------|------|------|
+| flx:BTC | 比特币 | 追踪比特币 (BTC) 价格的永续合约。1 合约代表 1 BTC，市值最大的加密货币，运行在去中心化区块链网络上，被广泛用作数字价值储存。 |
 | flx:GOLD | 黄金 | 追踪黄金价格的永续合约。1 合约代表 1 金衡盎司黄金。 |
 | flx:SILVER | 白银 | 追踪白银价格的永续合约。1 合约代表 1 金衡盎司白银。 |
 | flx:OIL | 原油 | 追踪 WTI 原油价格的永续合约。1 合约代表 1 桶原油，全球关键能源商品。 |
+| flx:GAS | 天然气 | 追踪 Henry Hub 天然气价格的永续合约。1 合约代表 1 MMBtu 天然气，用于发电、供暖和工业能源。 |
 | flx:COPPER | 铜 | 追踪铜价格的永续合约。1 合约代表 1 磅铜。 |
 | flx:PALLADIUM | 钯金 | 追踪钯金价格的永续合约。1 合约代表 1 金衡盎司钯金。 |
 | flx:PLATINUM | 铂金 | 追踪铂金价格的永续合约。1 合约代表 1 金衡盎司铂金。 |
@@ -210,6 +217,8 @@ curl -s -X POST https://api.hyperliquid.xyz/info \
 | flx:CRCL | Circle | 追踪 Circle 股票价格的永续合约。Circle 开发基于稳定币和公链的支付技术。 |
 | flx:XMR | 门罗币 | 追踪 Monero (XMR) 价格的永续合约。XMR 是隐私导向的加密货币，使用高级密码学隐藏交易信息。 |
 | flx:USDE | USDe | 追踪 Ethena USDe 价格的永续合约。USDe 是通过加密衍生品 delta 中性对冲策略维持约 $1 价值的合成美元稳定币。 |
+| flx:USA100 | 纳斯达克100 | 追踪纳斯达克100指数价格的永续合约。 |
+| flx:USA500 | 标普500 | 追踪标普500指数价格的永续合约。该指数衡量美国 500 家最大上市公司的股票表现，是美国股市和经济的主要代表指数。 |
 
 ### vntl — Ventuals (板块 ETF & Pre-IPO)
 
@@ -235,25 +244,36 @@ curl -s -X POST https://api.hyperliquid.xyz/info \
 |------|------|------|
 | km:AAPL | 苹果 | Apple Inc. 全球科技公司，设计制造消费电子、软件和数字服务。 |
 | km:BABA | 阿里巴巴 | Alibaba Group (ADR). 中国跨国科技集团，运营电商、云计算、数字媒体和金融服务。 |
+| km:BMNR | Bitmine | Bitmine Immersion Technologies. 科技公司，专注于获取、持有和积极管理 ETH 作为主要国库储备资产。 |
 | km:GOOGL | 谷歌 | Alphabet Inc (A 类). Google 母公司，运营搜索、数字广告、云计算、自动驾驶和 AI 研究。 |
 | km:MU | 美光 | Micron Technology. 全球半导体公司，设计制造 DRAM、NAND 闪存和 SSD。 |
 | km:NVDA | 英伟达 | NVIDIA Corporation. 领先半导体公司，设计 GPU、数据中心加速器和 AI 计算平台。 |
 | km:PLTR | Palantir | Palantir Technologies. 国防导向的数据分析和软件公司，提供 AI 驱动的政府和商业数据平台。 |
+| km:RTX | 雷神 | RTX Corporation (原 Raytheon Technologies). 美国跨国航空航天与国防集团，旗下包括普惠发动机、柯林斯航空和雷神导弹防御。 |
+| km:TENCENT | 腾讯 | Tencent Holdings. 中国跨国科技与娱乐集团，运营微信、游戏和金融科技平台。 |
 | km:TSLA | 特斯拉 | Tesla, Inc. 垂直整合的电动汽车和清洁能源公司。 |
+| km:XIAOMI | 小米 | Xiaomi Corporation. 中国消费电子和智能制造公司，生产智能手机、IoT 设备和智能家居产品。 |
 | km:GOLD | 黄金 | 黄金现货价格，广泛被视为价值储存、通胀对冲和市场不确定时期的避险资产。 |
 | km:SILVER | 白银 | 白银现货价格，跨投资、电子、太阳能和制造业的贵金属和工业金属。 |
 | km:USOIL | 美国原油 | 追踪通过近月期货合约跟踪 WTI 原油日价格变动的美国上市工具。此合约不反映原油现货价格。 |
+| km:EUR | 欧元 | 追踪 EUR/USD 汇率。欧元是欧元区官方货币。 |
 | km:US500 | 标普500 | 按市值计算美国 500 家最大公司的广泛敞口，覆盖美国股市所有主要板块。 |
 | km:USTECH | 纳斯达克 | 美国交易所上市的 100 家最大非金融公司，集中在科技、通信和高增长板块。 |
+| km:JPN225 | 日经225 | 日经225指数，追踪 225 家日本领先上市企业，日本股市的主要基准。 |
 | km:SMALL2000 | 罗素2000 | 约 2000 家美国小盘上市公司，代表美国股市小市值板块。 |
 | km:SEMI | 半导体板块 | 约 30 家美国上市半导体公司，覆盖芯片设计、制造、封装和设备。 |
 | km:GLDMINE | 金矿板块 | 全球上市黄金矿业公司的多元化敞口，覆盖大中盘生产商。 |
 | km:USENERGY | 美国能源 | 美国上市能源板块公司，覆盖油气勘探、生产、炼化、运输和设备服务。 |
+| km:USBOND | 美国债券 | 追踪美国国债价格，反映美国政府债券市场表现。 |
 
 ### cash — dreamcash
 
-> cash DEX 暂无 `perpAnnotation` 描述数据。资产包括：AMZN, EWY, GOLD, GOOGL, HOOD, INTC, META, MSFT, NVDA, SILVER, TSLA, USA500。
+> cash DEX 暂无 `perpAnnotation` 描述数据。资产包括：AMZN, BTC, EWY, GOLD, GOOGL, HOOD, INTC, KWEB, META, MSFT, NVDA, SILVER, TSLA, USA500, WTI。
 
 ### hyna — HyENA
 
-> hyna DEX 暂无 `perpAnnotation` 描述数据。主要是加密货币永续合约：BTC, ETH, SOL, HYPE, DOGE, XRP, LTC, LINK, BNB, ADA, BCH, XMR, ENA, SUI, FARTCOIN, IP, LIGHTER, LIT, PUMP, XPL, ZEC。
+> hyna DEX 暂无 `perpAnnotation` 描述数据。主要是加密货币永续合约：1000PEPE, ADA, BCH, BNB, BTC, DOGE, ENA, ETH, FARTCOIN, HYPE, IP, LIGHTER, LINK, LIT, LTC, PUMP, SILVER, SOL, SUI, XMR, XPL, XRP, ZEC。
+
+### abcd — ABCDEx
+
+> abcd DEX 暂无 `perpAnnotation` 描述数据。资产包括：USA500。
